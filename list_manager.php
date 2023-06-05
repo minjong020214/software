@@ -7,7 +7,7 @@
     <style type="text/css">
         table {
             border: none;
-            border-spacing: 5px;
+            border-spacing: 5px 0;
         }
 
         #tableall {
@@ -48,9 +48,9 @@
                 <td>
                     <table id="tablechart">
                         <tr id="trtitle">
-                            <td id="thnum">번호</td>
-                            <td id="thname">이름</td>
-                            <td id="thphone">전화번호</td>
+                            <td>번호</td>
+                            <td>이름</td>
+                            <td>전화번호</td>
                         </tr>
                         <!-- 데이터베이스(php) 연결 -->
                         <?php
@@ -60,55 +60,34 @@
                             $user = "softwareteam";
                             $password = "teamteam12#";
                             $dbname = "softwareteam";
+                            $port = "3306";
 
-                            $conn = new mysqli($server, $user, $password, $dbname);
+                            $conn = mysqli_connect($server, $user, $password, $dbname);
 
-                            if ($conn -> connect_error) echo "<tr><td colspan='3'><center>접속에 실패하였습니다.</center></td></tr>";
-                            else echo "<tr><td colspan='3'><center>접속에 성공하였습니다.</center></td></tr>";
+                            // if ($conn -> connect_error) echo "<tr><td colspan='3'><center>접속에 실패하였습니다.</center></td></tr>";
+                            // else echo "<tr><td colspan='3'><center>접속에 성공하였습니다.</center></td></tr>";
+                        ?>
+                        <?php
+                            $sql = "SELECT * from MANAGER;";
+                            $result = mysqli_query($conn, $sql); //쿼리 실행
                         
-                            // mysqli_close($conn);
-                        ?>
-                        <!-- 데이터베이스 목록 받아오기 시작 -->
-                        <?php
-                            $sql = "select * from manager";
-                            $result = $conn -> query($sql);
-
-                            echo (isset($result)&& $result -> num_rows);
-
-                            if (isset($result) && $result -> num_rows > 0) {
-                                while ($row = $result -> fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td id='tdnum'>";
-                                    echo $row['mg_num'];
-                                    echo "</td>";
-                                    echo "<td id='tdname'>";
-                                    echo $row['mg_name'];
-                                    echo "</td>";
-                                    echo "<td id='tdphone'>";
-                                    echo $row['mg_pnum'];
-                                    echo "</td>";
-                                    echo "</tr>";
+                            if ( $result ) { 
+                                echo "관리자 데이터가 ".mysqli_num_rows($result)."명 있습니다.<br />"; // 값이 array ㅇㅈㄹ
+                                while ($row = mysqli_fetch_assoc($result)){
+                                    // echo "<br />". $row["MB_NAME"];
+                                    echo "<tr><td id='tdnum'>".$row["MG_NUM"]."</td>
+                                    <td>".$row["MG_NAME"]."</td>
+                                    <td>".$row["MG_PNUM"]."</td>
+                                    </tr>";
                                 }
-                            } else echo "검색된 데이터가 없습니다.";
-                        ?>
-                        <tr>
-                            <td id="tdnum">1</td>
-                            <td id="tdname">백석대</td>
-                            <td id="tdphone">010-1234-5678</td>
-                        </tr>
-                        <tr>
-                            <td id="tdnum">2</td>
-                            <td id="tdname">문화대</td>
-                            <td id="tdphone">010-2345-6789</td>
-                        </tr>
-                        <tr>
-                            <td id="tdnum">3</td>
-                            <td id="tdname">이디야</td>
-                            <td id="tdphone">041-557-1003</td>
-                        </tr>
-                        <!-- 데이터베이스 목록 받아오기 종료 -->
+                                mysqli_free_result($result);
+                            }
+                            // echo (isset($result)&& $result -> num_rows);
+                            ?>
+                        <!-- 데이터베이스 목록 받아오기 시작 -->
+                        
                         <?php
-                            mysqli_close($conn);
+                          mysqli_close($conn); //sql 종료
                         ?>
                     </table>
                 </td>
