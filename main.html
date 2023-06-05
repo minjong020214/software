@@ -5,18 +5,66 @@
     <meta charset="UTF-8">
     <title>어르신 복지 웹페이지</title>
     <style type="text/css">
-
+        * {
+            text-align: center;
+            font-size: xx-large;
+        }
+        table {
+            width: 100%;
+            border-spacing: 10px;
+        }
+        td.title {
+            height: 180px;
+            font-weight: bold;
+        }
+        td.links {
+            height: 90px;
+            background-color: antiquewhite;
+        }
+        td.links:hover {
+            background-color: wheat;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
     </style>
 </head>
 
 <body>
-    <div>접속을 환영합니다!</div>
-    <div>
-        <a href="list_member.html">멤버 목록</a>
-    </div>
-    <div>
-        <a href="list_manager.html">관리자 목록</a>
-    </div>
+    <table>
+        <tr>
+            <td class="title">
+                어르신 복지 홈페이지에<br>
+                접속하신 것을 환영합니다!
+            </td>
+        </tr>
+        <tr onclick="location.href='list_emergency.php'">
+            <td class="links">
+                긴급 상황 확인
+            </td>
+        </tr>
+        <tr onclick="location.href='list_manager.php'">
+            <td class="links">
+                관리자 목록
+            </td>
+        </tr>
+        <tr onclick="location.href='list_medicine.php'">
+            <td class="links">
+                약 처방 기록
+            </td>
+        </tr>
+        <tr onclick="location.href='list_member.php'">
+            <td class="links">
+                멤버 목록
+            </td>
+        </tr>
+        <tr onclick="location.href='list_visit.php'">
+            <td class="links">
+                호출 기록
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>
